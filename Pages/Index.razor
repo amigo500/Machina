@@ -1,9 +1,16 @@
 ﻿@page "/"
 
-<PageTitle>Index</PageTitle>
-
-<h1>Hello, world!</h1>
-
-Welcome to your new app.
-
-<SurveyPrompt Title="How is Blazor working for you?" />
+<!-- dashboard -->
+<div id="dashboard" class="container mt-5">
+    <!-- page title -->
+    <div class="mb-4">
+        <h5>Dashboard</h5>
+        <p class="text-sub">
+            Overview of the Machine Park
+        </p>
+    </div>
+    <div class="gridview">
+        <DailyStats />
+        <DeviceList />
+    </div>
+</div>

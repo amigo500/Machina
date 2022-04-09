@@ -1,0 +1,106 @@
+﻿<!-- statistics -->
+<div id="statistics" class="card shadow">
+    <div class="content">
+        <div class="d-flex align-items-center justify-content-between">
+            <div>
+                <div class="title">Daily Stats</div>
+                <div class="ingress text-sub">
+                    @if (_dailyStatsItem is not null)
+                    {
+                        <span>@_dailyStatsItem.TotalMessages.ToString("N0") </span>
+                    }
+                    else
+                    {
+                        <span>0 </span>
+                    }
+                    messages sent
+                </div>
+            </div>
+            <span class="sync-icon" @onclick="async () => { await GetDailyStats(); }">
+                <i class="fas fa-sync-alt"></i>
+            </span>
+        </div>
+
+        <div class="stats mt-4">
+            @if (_dailyStatsItem is not null)
+            {
+                <!-- stat-list-item -->
+                <div class="stat-list-item mb-3">
+                    <div class="stat-item">
+                        <div class="icon d-flex align-items-center justify-content-center">
+                            <i class="fas fa-microchip"></i>
+                        </div>
+                        <div>
+                            <div class="title">Total Devices</div>
+                            <div class="ingress">Total number of Devices</div>
+                        </div>
+                    </div>
+                    <div class="stat">
+                        @_dailyStatsItem.TotalDevices.ToString("N0")
+                    </div>
+                </div>
+
+                <!-- stat-list-item -->
+                <div class="stat-list-item mb-3">
+                    <div class="stat-item">
+                        <div class="icon d-flex align-items-center justify-content-center">
+                            <i class="fas fa-microchip"></i>
+                        </div>
+                        <div>
+                            <div class="title">New Devices</div>
+                            <div class="ingress">Number of new devices</div>
+                        </div>
+                    </div>
+                    <div class="stat">
+                        @_dailyStatsItem.TotalNewDevices.ToString("N0")
+                    </div>
+                </div>
+
+                <!-- stat-list-item -->
+                <div class="stat-list-item mb-3">
+                    <div class="stat-item">
+                        <div class="icon d-flex align-items-center justify-content-center">
+                            <i class="fas fa-microchip"></i>
+                        </div>
+                        <div>
+                            <div class="title">C2D Count</div>
+                            <div class="ingress">Cloud 2 Device messages</div>
+                        </div>
+                    </div>
+                    <div class="stat">
+                        @_dailyStatsItem.TotalC2DCount.ToString("N0")
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="d-flex justify-content-center align-items-center">
+                    <div class="spinner-border" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            }
+
+        </div>
+
+    </div>
+    <div class="footer">
+        <img src="images/yellow-line.jpg" class="card-img-top" alt="yellow-line">
+    </div>
+</div>
+
+@code {
+    private DailyStatsItem _dailyStatsItem;
+
+    private async Task GetDailyStats()
+    {
+        _dailyStatsItem = new DailyStatsItem();
+        _dailyStatsItem = await client.GetFromJsonAsync<DailyStatsItem>("https://azdev1.azurewebsites.net/api/mock/dailystats");
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetDailyStats();
+    }
+
+}

@@ -1,0 +1,56 @@
+﻿@page "/Devices"
+
+<h3>Devices</h3>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Status</th>
+        <th>Data</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var device in DeviceList)
+    {
+        <tr>
+            <td>@device.DeviceId.ToString()</td>
+            <td>@device.Name</td>
+            <td>@device.StatusString</td>
+            <td>@device.LatestData</td>
+            <td><button class="btn-primary">Send Command</button></td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+@code {
+
+    public List<Device> DeviceList = new List<Device>
+    {
+        new Device
+        {
+            DeviceId = Guid.NewGuid(),
+            Name = " Device 1",
+            Status = DeviceStatus.Offline,
+            LatestData = "Device1 Data"
+        },
+        new Device
+        {
+            DeviceId = Guid.NewGuid(),
+            Name = " Device 2",
+            Status = DeviceStatus.Online,
+            LatestData = "Device2 Data"
+        },
+        new Device
+        {
+            DeviceId = Guid.NewGuid(),
+            Name = " Device 3",
+            Status = DeviceStatus.Online,
+            LatestData = "Device3 Data"
+        }
+    };
+
+}
